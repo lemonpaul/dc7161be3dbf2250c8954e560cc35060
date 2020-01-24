@@ -1,0 +1,55 @@
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
+<form action="update/" method="get">
+    <a href="{% url 'functions:add' %}">Добавить</a>
+    <input type="submit" value="Обновить">
+    {% if function_list %}
+        <table>
+            <tr>
+                <th></th>
+                <th>Функция</th>
+                <th>График</th>
+                <th>Интервал t, дней</th>
+                <th>Шаг t, часы</th>
+                <th>Дата обработки</th>
+            </tr>
+            {% for function in function_list %}
+                <tr>
+                    <td><input type="checkbox" name="formula{{ function.id }}" value="{{ function.id }}"></td>
+                    <td>{{ function.formula }}</td>
+                    <td width="59%">
+                        <div id="container{{ function.id }}"></div>
+                        <script>
+                            Highcharts.chart('container{{ function.id }}', {
+                                chart: {
+                                    type: 'line'
+                                },
+                                title: {
+                                    text: ''
+                                },
+                                xAxis: {
+                                    categories: {{ function.marks }},
+                                },
+                                yAxis: {
+                                    title: {
+                                        text: ''
+                                    },
+                                },
+                                series: [{
+                                    showInLegend: false,
+                                    name: 'y(t)',
+                                    data: {{ function.values }}
+                                }]
+                            });
+                        </script>
+                    </td>
+                    <td>{{ function.interval }}</td>
+                    <td>{{ function.step }}</td>
+                    <td>{{ function.modified }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No functions are available.</p>
+    {% endif %}
+</form>
+
