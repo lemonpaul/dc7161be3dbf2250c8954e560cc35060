@@ -1,4 +1,22 @@
-<form method="post">{% csrf_token %}
-    {{ form.as_p }}
+<form action="{% url 'functions:add' %}" method="post">
+    {% csrf_token %}
+    {% if interval_error %}
+        <p>Интервал должен быть натуральным числом.</p>
+    {% endif %}
+    {% if step_error %}
+        <p>Шаг должен быть натуральным числом.</p>
+    {% endif %}
+    <p>
+        <label for="formula_input">Формула:</label>
+        <input id="formula_input" type="text" name="formula">
+    </p>
+    <p>
+        <label for="interval_input">Интервал:</label>
+        <input id="interval_input" type="text" name="interval">
+    </p>
+    <p>
+        <label for="step_input">Шаг:</label>
+        <input id="step_input" type="text" name="step">
+    </p>
     <input type="submit" value="Сохранить">
 </form>
