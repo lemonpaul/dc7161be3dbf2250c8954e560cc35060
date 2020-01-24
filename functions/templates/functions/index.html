@@ -1,11 +1,11 @@
 <script src="https://code.highcharts.com/highcharts.src.js"></script>
-<form action="update/" method="get">
-    <a href="{% url 'functions:add' %}">Добавить</a>
+<form action="update" method="get">
     <input type="submit" value="Обновить">
+    <a href="{% url 'functions:add' %}">Добавить</a>
     {% if function_list %}
         <table>
             <tr>
-                <th></th>
+                <th><input type="checkbox" onClick="checkboxes = document.getElementsByTagName('input'); for (var i=0, n=checkboxes.length; i<n; i++) checkboxes[i].checked = this.checked;" /></th>
                 <th>Функция</th>
                 <th>График</th>
                 <th>Интервал t, дней</th>
@@ -18,33 +18,37 @@
                     <td>{{ function.formula }}</td>
                     <td width="59%">
                         <div id="container{{ function.id }}"></div>
-                        <script>
-                            Highcharts.chart('container{{ function.id }}', {
-                                chart: {
-                                    type: 'line'
-                                },
-                                title: {
-                                    text: ''
-                                },
-                                xAxis: {
-                                    categories: {{ function.marks }},
-                                },
-                                yAxis: {
+                        {% if function.values %}
+                            <script>
+                                Highcharts.chart('container{{ function.id }}', {
+                                    chart: {
+                                        type: 'line'
+                                    },
                                     title: {
                                         text: ''
                                     },
-                                },
-                                series: [{
-                                    showInLegend: false,
-                                    name: 'y(t)',
-                                    data: {{ function.values }}
-                                }]
-                            });
-                        </script>
+                                    xAxis: {
+                                        categories: {{ function.marks }},
+                                    },
+                                    yAxis: {
+                                        title: {
+                                            text: ''
+                                        },
+                                    },
+                                    series: [{
+                                        showInLegend: false,
+                                        name: 'y(t)',
+                                        data: {{ function.values }}
+                                    }]
+                                });
+                            </script>
+                        {% else %}
+                            {{ function.error }}
+                        {% endif %}
                     </td>
                     <td>{{ function.interval }}</td>
                     <td>{{ function.step }}</td>
-                    <td>{{ function.modified }}</td>
+                    <td>{{ function.format_modified }}</td>
                 </tr>
             {% endfor %}
         </table>

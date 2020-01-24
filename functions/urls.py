@@ -8,4 +8,3 @@ urlpatterns = [
     path('add/', views.FunctionCreate.as_view(), name='add'),
     path('update/', views.update, name='update'),
 ]
-

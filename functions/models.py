@@ -11,22 +11,10 @@ class Function(models.Model):
     formula = models.CharField(max_length=200, verbose_name="Функция")
     interval = models.IntegerField(default=0, validators=[validators.MinValueValidator(1, message="Интервал должен натуральным числом.")], verbose_name="Интервал (дни)")
     step = models.IntegerField(default=0, validators=[validators.MinValueValidator(1, message="Шаг должен быть натуральным числом.")], verbose_name="Шаг (часы)")
-    modified = models.DateTimeField(default=timezone.now)
+    modified = models.DateTimeField(auto_now_add=True)
 
     def get_absolute_url(self):
         return "/functions/"
-
-    def plot(self):
-        start = self.modified - datetime.timedelta(days=self.interval)
-        finish = self.modified
-        data = list()
-        while start <= finish:
-            mark = round(start.timestamp())
-            t = mark
-            value = eval(self.formula)
-            data.append([mark, value])
-            start += datetime.timedelta(hours=self.step)
-        return data
 
     def marks(self):
         start = self.modified - datetime.timedelta(days=self.interval)
@@ -42,10 +30,24 @@ class Function(models.Model):
         start = self.modified - datetime.timedelta(days=self.interval)
         finish = self.modified
         values = list()
-        while start <= finish:
-            t = round(start.timestamp())
-            value = eval(self.formula)
-            values.append(value)
-            start += datetime.timedelta(hours=self.step)
-        return values 
+        try:
+            while start <= finish:
+                t = round(start.timestamp())
+                value = eval(self.formula)
+                values.append(value)
+                start += datetime.timedelta(hours=self.step)
+        except NameError as error:
+            values = list()
+        return values
+
+    def error(self):
+        try:
+            eval(self.formula)
+            error = "formula is valid"
+        except NameError as nameError:
+            error = nameError
+        return error
+
+    def format_modified(self):
+        return self.modified.strftime("%Y-%m-%d %H:%M:%S.%f")
 
