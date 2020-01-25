@@ -44,4 +44,8 @@ def done(request):
                     function.modified = timezone.now()
                     function.generate_data()
                     function.save()
+        if request.GET['action'] == 'delete':
+            for function in Function.objects.all():
+                if "formula%s" % function.id in request.GET:
+                    function.delete()
     return HttpResponseRedirect(reverse('functions:index'))
