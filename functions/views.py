@@ -15,16 +15,22 @@ def add(request):
     context = {'interval_error': False, 'step_error': False}
     if request.method == "POST":
         formula_value = str(request.POST['formula'])
-        interval_value = int(request.POST['interval'])
-        step_value = int(request.POST['step'])
-        if interval_value < 1:
+        try:
+            interval_value = int(request.POST['interval'])
+            if interval_value < 1:
+                context['interval_error'] = True
+            else:
+                context['interval_error'] = False
+        except ValueError:
             context['interval_error'] = True
-        else:
-            context['interval_error'] = False
-        if step_value < 1:
+        try:
+            step_value = int(request.POST['step'])
+            if step_value < 1:
+                context['step_error'] = True
+            else:
+                context['step_error'] = False
+        except ValueError:
             context['step_error'] = True
-        else:
-            context['step_error'] = False
         if context['interval_error'] or context['step_error']:
             return render(request, 'functions/add.html', context)
         else:
