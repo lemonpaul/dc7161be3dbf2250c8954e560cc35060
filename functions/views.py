@@ -1,9 +1,39 @@
+import datetime
+
+from math import *
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
 
 from .models import Function
+
+
+def generate_data(id):
+    function = Function.objects.get(pk=id)
+    start = function.modified - datetime.timedelta(days=function.interval)
+    finish = function.modified
+    marks = list()
+    values = list()
+    try:
+        while start <= finish:
+            t = round(start.timestamp())
+            f = eval(function.formula)
+            marks.append(t)
+            values.append(f)
+            start += datetime.timedelta(hours=function.step)
+        function.marks = marks
+        function.values = values
+        function.save()
+        return
+    except NameError as name_error:
+        function.error = name_error
+        function.save()
+        return
+    except ValueError as value_error:
+        function.error = value_error
+        function.save()
+        return
 
 
 def index(request):
@@ -35,8 +65,8 @@ def add(request):
             return render(request, 'functions/add.html', context)
         else:
             function = Function.objects.create(formula=formula_value, interval=interval_value, step=step_value)
-            function.generate_data()
             function.save()
+            generate_data(function.id)
             return HttpResponseRedirect(reverse('functions:index'))
     else:
         return render(request, 'functions/add.html', context)
@@ -48,8 +78,8 @@ def done(request):
             for function in Function.objects.all():
                 if "formula%s" % function.id in request.GET:
                     function.modified = timezone.now()
-                    function.generate_data()
                     function.save()
+                    generate_data(function.id)
         if request.GET['action'] == 'delete':
             for function in Function.objects.all():
                 if "formula%s" % function.id in request.GET:
