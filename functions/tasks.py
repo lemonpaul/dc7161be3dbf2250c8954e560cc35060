@@ -2,15 +2,14 @@ import datetime
 
 from math import *
 
-from celery import Celery
+from celery import shared_task
 
 from .models import Function
 
-app = Celery()
 
-
-@app.task
+@shared_task
 def generate_data(function_id):
+    print('generate_data')
     function = Function.objects.get(pk=function_id)
     start = function.modified - datetime.timedelta(days=function.interval)
     finish = function.modified

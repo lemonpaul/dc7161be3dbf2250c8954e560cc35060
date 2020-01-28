@@ -1,11 +1,10 @@
-
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
 
 from .models import Function
-from . import tasks
+from .tasks import generate_data
 
 
 def index(request):
@@ -38,7 +37,7 @@ def add(request):
         else:
             function = Function.objects.create(formula=formula_value, interval=interval_value, step=step_value)
             function.save()
-            tasks.generate_data(function.id)
+            generate_data.delay(function.id)
             return HttpResponseRedirect(reverse('functions:index'))
     else:
         return render(request, 'functions/add.html', context)
@@ -51,7 +50,7 @@ def done(request):
                 if "formula%s" % function.id in request.GET:
                     function.modified = timezone.now()
                     function.save()
-                    tasks.generate_data(function.id)
+                    generate_data.delay(function.id)
         if request.GET['action'] == 'delete':
             for function in Function.objects.all():
                 if "formula%s" % function.id in request.GET:
