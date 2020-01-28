@@ -76,12 +76,11 @@ WSGI_APPLICATION = 'dashboard.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'db',
-        'USER': 'admin',
-        'PASSWORD': 'admin',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
 
@@ -124,5 +123,5 @@ USE_L10N = True
 STATIC_URL = '/static/'
 
 # Celery
-CELERY_BROKER_URL = 'amqp://admin:admin@localhost:5672/host'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_BROKER_URL = 'amqp://admin:admin@rabbit:5672'
+CELERY_RESULT_BACKEND = 'redis://redis:6379'
