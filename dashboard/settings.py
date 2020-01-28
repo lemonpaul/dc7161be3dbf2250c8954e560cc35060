@@ -124,5 +124,5 @@ USE_L10N = True
 STATIC_URL = '/static/'
 
 # Celery
-CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_BROKER_URL = 'amqp://admin:admin@localhost:5672/host'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'

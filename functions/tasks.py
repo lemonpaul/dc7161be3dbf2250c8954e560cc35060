@@ -9,7 +9,6 @@ from .models import Function
 
 @shared_task
 def generate_data(function_id):
-    print('generate_data')
     function = Function.objects.get(pk=function_id)
     start = function.modified - datetime.timedelta(days=function.interval)
     finish = function.modified

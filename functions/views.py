@@ -37,7 +37,8 @@ def add(request):
         else:
             function = Function.objects.create(formula=formula_value, interval=interval_value, step=step_value)
             function.save()
-            generate_data.delay(function.id)
+            task = generate_data.delay(function.id)
+            task.wait()
             return HttpResponseRedirect(reverse('functions:index'))
     else:
         return render(request, 'functions/add.html', context)
@@ -50,7 +51,8 @@ def done(request):
                 if "formula%s" % function.id in request.GET:
                     function.modified = timezone.now()
                     function.save()
-                    generate_data.delay(function.id)
+                    task = generate_data.delay(function.id)
+                    task.wait()
         if request.GET['action'] == 'delete':
             for function in Function.objects.all():
                 if "formula%s" % function.id in request.GET:
