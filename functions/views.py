@@ -20,16 +20,12 @@ def add(request):
             interval_value = int(request.POST['interval'])
             if interval_value < 1:
                 context['interval_error'] = True
-            else:
-                context['interval_error'] = False
         except ValueError:
             context['interval_error'] = True
         try:
             step_value = int(request.POST['step'])
             if step_value < 1:
                 context['step_error'] = True
-            else:
-                context['step_error'] = False
         except ValueError:
             context['step_error'] = True
         if context['interval_error'] or context['step_error']:
@@ -45,16 +41,16 @@ def add(request):
 
 
 def done(request):
-    if request.method == "GET":
-        if request.GET['action'] == 'update':
+    if request.method == "POST":
+        if request.POST['action'] == 'update':
             for function in Function.objects.all():
-                if "formula%s" % function.id in request.GET:
+                if "formula%s" % function.id in request.POST:
                     function.modified = timezone.now()
                     function.save()
                     task = generate_data.delay(function.id)
                     task.wait()
-        if request.GET['action'] == 'delete':
+        if request.POST['action'] == 'delete':
             for function in Function.objects.all():
-                if "formula%s" % function.id in request.GET:
+                if "formula%s" % function.id in request.POST:
                     function.delete()
     return HttpResponseRedirect(reverse('functions:index'))
