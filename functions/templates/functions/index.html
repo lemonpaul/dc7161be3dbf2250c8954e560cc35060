@@ -3,7 +3,7 @@
     {% csrf_token %}
     <table>
         <tr>
-            <td nowrap="">
+            <td nowrap>
                 <select name="action">
                     <option value="update">Обновить</option>
                     <option value="delete">Удалить</option>
@@ -67,7 +67,7 @@
                 </tr>
             {% endfor %}
         {% else %}
-        <tr><td>No functions are available.</td></tr>
+        <tr><td>Нет сохраненных функций.</td></tr>
         {% endif %}
     </table>
 </form>
