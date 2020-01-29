@@ -134,6 +134,9 @@ USE_L10N = True
 
 STATIC_URL = '/static/'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = 'media'
+
 # Celery
 CELERY_BROKER_URL = 'amqp://admin:admin@rabbit:5672'
 CELERY_RESULT_BACKEND = 'redis://redis:6379'

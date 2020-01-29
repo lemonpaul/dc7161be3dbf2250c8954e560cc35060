@@ -3,3 +3,5 @@ psycopg2
 celery
 redis
 rabbitmq
+Pillow
+urllib3

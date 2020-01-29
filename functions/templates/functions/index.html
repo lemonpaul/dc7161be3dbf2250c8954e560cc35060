@@ -1,7 +1,7 @@
 <script src="https://code.highcharts.com/highcharts.src.js"></script>
 <form action="{% url 'functions:done' %}" method="post">
     {% csrf_token %}
-    <table>
+    <table width="100%">
         <tr>
             <td nowrap>
                 <select name="action">
@@ -32,33 +32,10 @@
                     <td><input type="checkbox" name="formula{{ function.id }}" value="{{ function.id }}"></td>
                     <td>{{ function.formula }}</td>
                     <td width="50%">
-                        <div id="container{{ function.id }}"></div>
-                        {% if function.values %}
-                            <script>
-                                Highcharts.chart('container{{ function.id }}', {
-                                    chart: {
-                                        type: 'line'
-                                    },
-                                    title: {
-                                        text: ''
-                                    },
-                                    xAxis: {
-                                        categories: {{ function.marks }},
-                                    },
-                                    yAxis: {
-                                        title: {
-                                            text: ''
-                                        },
-                                    },
-                                    series: [{
-                                        showInLegend: false,
-                                        name: 'y(t)',
-                                        data: {{ function.values }}
-                                    }]
-                                });
-                            </script>
+                        {% if function.plot %}
+                        <img src="{{ function.plot.url }}"/>
                         {% else %}
-                            {{ function.error }}
+                        {{ function.error }}
                         {% endif %}
                     </td>
                     <td>{{ function.interval }}</td>

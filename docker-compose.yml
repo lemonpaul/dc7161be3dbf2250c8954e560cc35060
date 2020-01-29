@@ -3,15 +3,21 @@ version: '3'
 services:
   db:
     image: postgres
+    networks:
+      - docker
   redis:
     image: redis
+    networks:
+      - docker
   rabbit:
     image: rabbitmq
     environment:
       - RABBITMQ_DEFAULT_USER=admin
       - RABBITMQ_DEFAULT_PASS=admin
     ports:
-      - "5673:5672"
+      - 5673:5672
+    networks:
+      - docker
   worker:
     build: .
     command: celery -A dashboard worker -l info
@@ -20,13 +26,28 @@ services:
     depends_on:
       - rabbit
       - redis
+    networks:
+      - docker
+  highcharts:
+    image: onsdigital/highcharts-export-node
+    ports:
+      - 8080:8080
+    networks:
+      - docker
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
     ports:
-      - "8000:8000"
+      - 8000:8000
     depends_on:
       - db
       - worker
+      - highcharts
+    networks:
+      - docker
+
+networks:
+  docker:
+    driver: bridge
