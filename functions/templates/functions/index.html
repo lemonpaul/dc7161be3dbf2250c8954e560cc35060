@@ -1,5 +1,6 @@
 <script src="https://code.highcharts.com/highcharts.src.js"></script>
-<form action="done/" method="post">{% csrf_token %}
+<form action="{% url 'functions:done' %}" method="post">
+    {% csrf_token %}
     <table>
         <tr>
             <td nowrap="">
@@ -70,4 +71,3 @@
         {% endif %}
     </table>
 </form>
-

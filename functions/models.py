@@ -11,9 +11,9 @@ class Function(models.Model):
     values = ArrayField(models.FloatField(), null=True, blank=True)
     error = models.CharField(max_length=200, null=True, blank=True)
 
-    def get_absolute_url(self):
+    @staticmethod
+    def get_absolute_url():
         return "/functions/"
 
     def format_modified(self):
         return self.modified.strftime("%Y-%m-%d %H:%M:%S.%f")
-
