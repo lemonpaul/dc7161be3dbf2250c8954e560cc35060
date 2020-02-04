@@ -32,9 +32,9 @@
                     <td>{{ function.formula }}</td>
                     <td width="50%">
                         {% if function.plot %}
-                            <img src="{{ function.plot.url }}"/>
+                        <img src="{{ function.plot.url }}"/>
                         {% else %}
-                            {{ function.error }}
+                        {{ function.error }}
                         {% endif %}
                     </td>
                     <td>{{ function.interval }}</td>

@@ -29,9 +29,7 @@ def generate_data(function_id):
                 os.remove(function.plot.path)
         function.plot.save('plot.png', File(open('media/images/plot.png', 'rb')))
         os.remove('media/images/plot.png')
-    except NameError as name_error:
-        function.error = name_error
-    except ValueError as value_error:
-        function.error = value_error
+    except (NameError, ValueError) as error:
+        function.error = error
     function.save()
     return
