@@ -1,54 +1,52 @@
 {% extends "functions/base.html" %}
 {% load i18n %}
 {% block title %}{% trans "Function dashboard" %}{% endblock %}
-{% block content %}
-<form action="{% url 'functions:done' %}" method="post">
-    {% csrf_token %}
-    <table width="100%">
-        <tr>
-            <td nowrap>
-                <select name="action">
-                    <option value="update">{% trans "Update" %}</option>
-                    <option value="delete">{% trans "Delete" %}</option>
-                </select>
-            </td>
-            <td>
-                <input type="submit" value="{% trans 'Done' %}">
-            </td>
-            <td colspan="4" align="right">
-                <a href="{% url 'functions:add' %}" style="-moz-appearance: button; -webkit-appearance: button; text-decoration: none; color: initial; font-family: sans-serif; font-size: 13.5">{% trans "Add" %}</a>
-            </td>
-        </tr>
-        {% if function_list %}
-            <tr align="center">
-                <th>
-                    <input type="checkbox" onClick="checkboxes = document.getElementsByTagName('input'); for (var i=0, n=checkboxes.length; i<n; i++) checkboxes[i].checked = this.checked;" />
-                </th>
-                <th>{% trans "Formula" %}</th>
-                <th>{% trans "Plot" %}</th>
-                <th>{% trans "Interval" %} t, {% trans "days" %}</th>
-                <th>{% trans "Step" %} t, {% trans "hours" %}</th>
-                <th>{% trans "Update date" %}</th>
-            </tr>
-            {% for function in function_list %}
+{% block body %}
+<body>
+    <form action="{% url 'functions:done' %}" method="post">
+        {% csrf_token %}
+        <div class="container-fluid p-4">
+        <div class="row">
+            <select name="action" class="custom-select col-1">
+                <option value="update">{% trans "Update" %}</option>
+                <option value="delete">{% trans "Delete" %}</option>
+            </select>
+            <button type="submit" class="btn btn-primary col-1">{% trans 'Done' %}</button>
+            <a class="btn btn-primary col-1 offset-9" href="{% url 'functions:add' %}">{% trans "Add" %}</a>
+        </div>
+        <table class="table mt-4">
+            {% if function_list %}
                 <tr align="center">
-                    <td><input type="checkbox" name="formula{{ function.id }}" value="{{ function.id }}"></td>
-                    <td>{{ function.formula }}</td>
-                    <td width="50%">
-                        {% if function.plot %}
-                        <img src="{{ function.plot.url }}"/>
-                        {% else %}
-                        {{ function.error }}
-                        {% endif %}
-                    </td>
-                    <td>{{ function.interval }}</td>
-                    <td>{{ function.step }}</td>
-                    <td>{{ function.format_modified }}</td>
+                    <th>
+                        <input type="checkbox" onClick="checkboxes = document.getElementsByTagName('input'); for (var i=0, n=checkboxes.length; i<n; i++) checkboxes[i].checked = this.checked;" />
+                    </th>
+                    <th>{% trans "Formula" %}</th>
+                    <th>{% trans "Plot" %}</th>
+                    <th>{% trans "Interval" %} t, {% trans "days" %}</th>
+                    <th>{% trans "Step" %} t, {% trans "hours" %}</th>
+                    <th>{% trans "Update date" %}</th>
                 </tr>
-            {% endfor %}
-        {% else %}
-        <tr><td>{% trans "No saved functions." %}</td></tr>
-        {% endif %}
-    </table>
-</form>
+                {% for function in function_list %}
+                    <tr align="center">
+                        <td><input type="checkbox" name="formula{{ function.id }}" value="{{ function.id }}"></td>
+                        <td>{{ function.formula }}</td>
+                        <td width="50%">
+                            {% if function.plot %}
+                            <img src="{{ function.plot.url }}"/>
+                            {% else %}
+                            {{ function.error }}
+                            {% endif %}
+                        </td>
+                        <td>{{ function.interval }}</td>
+                        <td>{{ function.step }}</td>
+                        <td>{{ function.format_modified }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+            <tr><td>{% trans "No saved functions." %}</td></tr>
+            {% endif %}
+        </table>
+        </div>
+    </form>
+</body>
 {% endblock %}
