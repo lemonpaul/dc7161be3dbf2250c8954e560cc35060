@@ -1,22 +1,23 @@
+{% load i18n %}
 <form action="{% url 'functions:add' %}" method="post">
     {% csrf_token %}
     {% if interval_error %}
-        <p>Интервал должен быть натуральным числом.</p>
+        <p>{% trans "Interval must be natural." %}</p>
     {% endif %}
     {% if step_error %}
-        <p>Шаг должен быть натуральным числом.</p>
+        <p>{% trans "Step must be natural." %}</p>
     {% endif %}
     <p>
-        <label for="formula_input">Формула:</label>
+        <label for="formula_input">{% trans "Formula" %}:</label>
         <input id="formula_input" type="text" name="formula">
     </p>
     <p>
-        <label for="interval_input">Интервал:</label>
+        <label for="interval_input">{% trans "Interval" %}:</label>
         <input id="interval_input" type="text" name="interval">
     </p>
     <p>
-        <label for="step_input">Шаг:</label>
+        <label for="step_input">{% trans "Step" %}:</label>
         <input id="step_input" type="text" name="step">
     </p>
-    <input type="submit" value="Сохранить">
+    <input type="submit" value="{% trans 'Save' %}">
 </form>

@@ -22,7 +22,8 @@ def generate_data(function_id):
         data = {'infile': {'title': {'text': ''}, 'xAxis': {'categories': t}, 'yAxis': {'title': {'text': ''}},
                            'series': [{'showInLegend': False, 'name': 'f(t)', 'data': f}]}}
         http = urllib3.PoolManager()
-        response = http.request('POST', 'http://highcharts:8080', headers={'Content-Type': 'application/json'}, body=json.dumps(data))
+        response = http.request('POST', 'http://highcharts:8080', headers={'Content-Type': 'application/json'},
+                                body=json.dumps(data))
         open('media/images/plot.png', 'wb').write(response.data)
         if function.plot:
             if os.path.isfile(function.plot.path):
