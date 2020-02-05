@@ -1,4 +1,7 @@
+{% extends "functions/base.html" %}
 {% load i18n %}
+{% block title %}{% trans "Function dashboard" %}{% endblock %}
+{% block content %}
 <form action="{% url 'functions:done' %}" method="post">
     {% csrf_token %}
     <table width="100%">
@@ -48,3 +51,4 @@
         {% endif %}
     </table>
 </form>
+{% endblock %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-05 17:51+0300\n"
+"POT-Creation-Date: 2020-02-05 18:39+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,65 +18,73 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: functions/templates/functions/add.html:5
+#: functions/templates/functions/add.html:3
+msgid "Add new function"
+msgstr "Add new function"
+
+#: functions/templates/functions/add.html:8
 msgid "Interval must be natural."
 msgstr "Interval must be natural."
 
-#: functions/templates/functions/add.html:8
+#: functions/templates/functions/add.html:11
 msgid "Step must be natural."
 msgstr "Step must be natural."
 
-#: functions/templates/functions/add.html:11
-#: functions/templates/functions/index.html:24
+#: functions/templates/functions/add.html:14
+#: functions/templates/functions/index.html:27
 msgid "Formula"
 msgstr "Formula"
 
-#: functions/templates/functions/add.html:15
-#: functions/templates/functions/index.html:26
+#: functions/templates/functions/add.html:18
+#: functions/templates/functions/index.html:29
 msgid "Interval"
 msgstr "Interval"
 
-#: functions/templates/functions/add.html:19
-#: functions/templates/functions/index.html:27
+#: functions/templates/functions/add.html:22
+#: functions/templates/functions/index.html:30
 msgid "Step"
 msgstr "Step"
 
-#: functions/templates/functions/add.html:22
+#: functions/templates/functions/add.html:25
 msgid "Save"
 msgstr "Save"
 
-#: functions/templates/functions/index.html:8
+#: functions/templates/functions/index.html:3
+msgid "Function dashboard"
+msgstr "Function dashboard"
+
+#: functions/templates/functions/index.html:11
 msgid "Update"
 msgstr "Update"
 
-#: functions/templates/functions/index.html:9
+#: functions/templates/functions/index.html:12
 msgid "Delete"
 msgstr "Delete"
 
-#: functions/templates/functions/index.html:13
+#: functions/templates/functions/index.html:16
 msgid "Done"
 msgstr "Done"
 
-#: functions/templates/functions/index.html:16
+#: functions/templates/functions/index.html:19
 msgid "Add"
 msgstr "Add"
 
-#: functions/templates/functions/index.html:25
+#: functions/templates/functions/index.html:28
 msgid "Plot"
 msgstr "Plot"
 
-#: functions/templates/functions/index.html:26
+#: functions/templates/functions/index.html:29
 msgid "days"
 msgstr "days"
 
-#: functions/templates/functions/index.html:27
+#: functions/templates/functions/index.html:30
 msgid "hours"
 msgstr "hours"
 
-#: functions/templates/functions/index.html:28
+#: functions/templates/functions/index.html:31
 msgid "Update date"
 msgstr "Update date"
 
-#: functions/templates/functions/index.html:47
+#: functions/templates/functions/index.html:50
 msgid "No saved functions."
 msgstr "No saved functions."

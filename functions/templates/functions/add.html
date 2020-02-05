@@ -1,4 +1,7 @@
+{% extends "functions/base.html" %}
 {% load i18n %}
+{% block title %}{% trans "Add new function" %}{% endblock %}
+{% block content %}
 <form action="{% url 'functions:add' %}" method="post">
     {% csrf_token %}
     {% if interval_error %}
@@ -21,3 +24,4 @@
     </p>
     <input type="submit" value="{% trans 'Save' %}">
 </form>
+{% endblock %}
