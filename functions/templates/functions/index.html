@@ -1,11 +1,10 @@
 {% extends "functions/base.html" %}
 {% load i18n %}
 {% block title %}{% trans "Function dashboard" %}{% endblock %}
-{% block body %}
-<body>
-    <form action="{% url 'functions:done' %}" method="post">
-        {% csrf_token %}
-        <div class="container-fluid p-4">
+{% block content %}
+<form action="{% url 'functions:done' %}" method="post">
+    {% csrf_token %}
+    <div class="container-fluid p-4">
         <div class="row">
             <select name="action" class="custom-select col-1">
                 <option value="update">{% trans "Update" %}</option>
@@ -43,10 +42,11 @@
                     </tr>
                 {% endfor %}
             {% else %}
-            <tr><td>{% trans "No saved functions." %}</td></tr>
+            <tr>
+                <td>{% trans "No saved functions." %}</td>
+            </tr>
             {% endif %}
         </table>
-        </div>
-    </form>
-</body>
+    </div>
+</form>
 {% endblock %}

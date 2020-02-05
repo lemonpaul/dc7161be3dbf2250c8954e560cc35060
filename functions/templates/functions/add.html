@@ -1,33 +1,31 @@
 {% extends "functions/base.html" %}
 {% load i18n %}
 {% block title %}{% trans "Add new function" %}{% endblock %}
-{% block body %}
-<body>
-    <form action="{% url 'functions:add' %}" method="post" class="col-2 offset-4 text-center p-4">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="formula_input">{% trans "Formula" %}</label>
-            <input id="formula_input" type="text" name="formula" class="form-control">
+{% block content %}
+<form action="{% url 'functions:add' %}" method="post" class="col-2 offset-4 p-4">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="formula_input">{% trans "Formula" %}</label>
+        <input id="formula_input" type="text" name="formula" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="interval_input">{% trans "Interval" %}</label>
+        <input id="interval_input" type="text" name="interval" class="form-control{% if interval_error %} is-invalid{% endif %}">
+        {% if interval_error %}
+        <div class="invalid-feedback">
+            {% trans "Interval must be natural." %}
         </div>
-        <div class="form-group">
-            <label for="interval_input">{% trans "Interval" %}</label>
-            <input id="interval_input" type="text" name="interval" class="form-control">
-            {% if interval_error %}
-            <div class="invalid-feedback d-block">
-                {% trans "Interval must be natural." %}
-            </div>
-            {% endif %}
+        {% endif %}
+    </div>
+    <div class="form-group">
+        <label for="step_input">{% trans "Step" %}</label>
+        <input id="step_input" type="text" name="step" class="form-control{% if step_error %} is-invalid{% endif %}">
+        {% if step_error %}
+        <div class="invalid-feedback">
+            {% trans "Step must be natural." %}
         </div>
-        <div class="form-group">
-            <label for="step_input">{% trans "Step" %}</label>
-            <input id="step_input" type="text" name="step" class="form-control">
-            {% if step_error %}
-            <div class="invalid-feedback d-block">
-                {% trans "Step must be natural." %}
-            </div>
-            {% endif %}
-        </div>
-        <button class="btn btn-primary btn-block" type="submit">{% trans 'Save' %}</button>
-    </form>
-</body>
+        {% endif %}
+    </div>
+    <button class="btn btn-primary btn-block" type="submit">{% trans 'Save' %}</button>
+</form>
 {% endblock %}
