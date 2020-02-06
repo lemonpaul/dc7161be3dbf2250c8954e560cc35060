@@ -6,12 +6,12 @@
     {% csrf_token %}
     <div class="container-fluid p-4">
         <div class="row">
-            <select name="action" class="custom-select col-1">
+            <select name="action" class="custom-select col-1 m-1">
                 <option value="update">{% trans "Update" %}</option>
                 <option value="delete">{% trans "Delete" %}</option>
             </select>
-            <button type="submit" class="btn btn-primary col-1">{% trans 'Done' %}</button>
-            <a href="{% url 'add' %}" class="btn btn-primary col-1 offset-9" >{% trans "Add" %}</a>
+            <button type="submit" class="btn btn-primary col-1 m-1">{% trans 'Done' %}</button>
+            <a href="{% url 'add' %}" class="btn btn-primary col-1 m-1 ml-auto">{% trans "Add" %}</a>
         </div>
         <table class="table mt-4">
             {% if function_list %}
