@@ -14,7 +14,7 @@ class Function(models.Model):
 
     @staticmethod
     def get_absolute_url():
-        return "/functions/"
+        return "/dashboard/"
 
     def format_modified(self):
         return self.modified.strftime("%Y-%m-%d %H:%M:%S.%f")

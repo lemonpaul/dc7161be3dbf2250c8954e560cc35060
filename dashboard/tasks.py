@@ -24,12 +24,14 @@ def generate_data(function_id):
         http = urllib3.PoolManager()
         response = http.request('POST', 'http://highcharts:8080', headers={'Content-Type': 'application/json'},
                                 body=json.dumps(data))
-        open('media/images/plot.png', 'wb').write(response.data)
+        open(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                          'media/images/plot.png'), 'wb').write(response.data)
         if function.plot:
             if os.path.isfile(function.plot.path):
                 os.remove(function.plot.path)
-        function.plot.save('plot.png', File(open('media/images/plot.png', 'rb')))
-        os.remove('media/images/plot.png')
+        function.plot.save('plot.png', File(open(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                                              'media/images/plot.png'), 'rb')))
+        os.remove(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'media/images/plot.png'))
     except (NameError, ValueError, SyntaxError) as error:
         function.error = error
     function.save()

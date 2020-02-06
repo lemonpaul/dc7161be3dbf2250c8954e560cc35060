@@ -9,7 +9,7 @@ from .tasks import generate_data
 
 def index(request):
     context = {'function_list': Function.objects.all()}
-    return render(request, 'functions/index.html', context)
+    return render(request, 'dashboard/index.html', context)
 
 
 def add(request):
@@ -29,15 +29,15 @@ def add(request):
         except ValueError:
             context['step_error'] = True
         if context['interval_error'] or context['step_error']:
-            return render(request, 'functions/add.html', context)
+            return render(request, 'dashboard/add.html', context)
         else:
             function = Function.objects.create(formula=formula_value, interval=interval_value, step=step_value)
             function.save()
             task = generate_data.delay(function.id)
             task.wait()
-            return HttpResponseRedirect(reverse('functions:index'))
+            return HttpResponseRedirect(reverse('index'))
     else:
-        return render(request, 'functions/add.html', context)
+        return render(request, 'dashboard/add.html', context)
 
 
 def done(request):
@@ -53,4 +53,4 @@ def done(request):
             for function in Function.objects.all():
                 if "formula%s" % function.id in request.POST:
                     function.delete()
-    return HttpResponseRedirect(reverse('functions:index'))
+    return HttpResponseRedirect(reverse('index'))
