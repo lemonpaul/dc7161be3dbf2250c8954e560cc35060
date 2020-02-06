@@ -53,7 +53,7 @@ msgstr "Сохранить"
 
 #: functions/templates/functions/index.html:3
 msgid "Function dashboard"
-msgstr "Дашборд функций"
+msgstr "Дэшборд функций"
 
 #: functions/templates/functions/index.html:11
 msgid "Update"
