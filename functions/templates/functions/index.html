@@ -11,7 +11,7 @@
                 <option value="delete">{% trans "Delete" %}</option>
             </select>
             <button type="submit" class="btn btn-primary col-1">{% trans 'Done' %}</button>
-            <a class="btn btn-primary col-1 offset-9" href="{% url 'functions:add' %}">{% trans "Add" %}</a>
+            <a href="{% url 'functions:add' %}" class="btn btn-primary col-1 offset-9" >{% trans "Add" %}</a>
         </div>
         <table class="table mt-4">
             {% if function_list %}
