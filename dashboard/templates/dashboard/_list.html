@@ -1,0 +1,35 @@
+{% load i18n %}
+<table class="table mt-4">
+    {% if function_list %}
+        <tr align="center">
+            <th>
+                <input type="checkbox" onClick="checkboxes = document.getElementsByTagName('input'); for (var i=0, n=checkboxes.length; i<n; i++) checkboxes[i].checked = this.checked;" />
+            </th>
+            <th>{% trans "Formula" %}</th>
+            <th>{% trans "Plot" %}</th>
+            <th>{% trans "Interval" %} t, {% trans "days" %}</th>
+            <th>{% trans "Step" %} t, {% trans "hours" %}</th>
+            <th>{% trans "Update date" %}</th>
+        </tr>
+        {% for function in function_list %}
+            <tr align="center">
+                <td><input type="checkbox" name="formula{{ function.id }}" value="{{ function.id }}"></td>
+                <td>{{ function.formula }}</td>
+                <td width="50%">
+                    {% if function.plot %}
+                    <img src="{{ function.plot.url }}"/>
+                    {% else %}
+                    {{ function.error }}
+                    {% endif %}
+                </td>
+                <td>{{ function.interval }}</td>
+                <td>{{ function.step }}</td>
+                <td>{{ function.format_modified }}</td>
+            </tr>
+        {% endfor %}
+    {% else %}
+    <tr>
+        <td>{% trans "No saved functions." %}</td>
+    </tr>
+    {% endif %}
+</table>

@@ -1,6 +1,5 @@
-from django.http import HttpResponseRedirect
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
-from django.urls import reverse
 from django.utils import timezone
 
 from .models import Function
@@ -29,15 +28,16 @@ def add(request):
         except ValueError:
             context['step_error'] = True
         if context['interval_error'] or context['step_error']:
-            return render(request, 'dashboard/add.html', context)
+            print(context)
+            return render(request, 'dashboard/_add.html', context, status=202)
         else:
             function = Function.objects.create(formula=formula_value, interval=interval_value, step=step_value)
             function.save()
             task = generate_data.delay(function.id)
             task.wait()
-            return HttpResponseRedirect(reverse('index'))
-    else:
-        return render(request, 'dashboard/add.html', context)
+            context = {'function_list': Function.objects.all()}
+            return render(request, 'dashboard/_list.html', context)
+    raise PermissionDenied
 
 
 def done(request):
@@ -53,4 +53,6 @@ def done(request):
             for function in Function.objects.all():
                 if "formula%s" % function.id in request.POST:
                     function.delete()
-    return HttpResponseRedirect(reverse('index'))
+        context = {'function_list': Function.objects.all()}
+        return render(request, 'dashboard/_list.html', context)
+    raise PermissionDenied
