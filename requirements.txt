@@ -5,3 +5,4 @@ redis
 rabbitmq
 Pillow
 urllib3
+sympy
