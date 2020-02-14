@@ -28,7 +28,6 @@ def add(request):
         except ValueError:
             context['step_error'] = True
         if context['interval_error'] or context['step_error']:
-            print(context)
             return render(request, 'dashboard/_add.html', context, status=202)
         else:
             function = Function.objects.create(formula=formula_value, interval=interval_value, step=step_value)
