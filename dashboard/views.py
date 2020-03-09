@@ -1,3 +1,5 @@
+import os
+
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
 from django.utils import timezone
@@ -51,6 +53,9 @@ def done(request):
         if request.POST['action'] == 'delete':
             for function in Function.objects.all():
                 if "formula%s" % function.id in request.POST:
+                    if function.plot:
+                        if os.path.isfile(function.plot.path):
+                            os.remove(function.plot.path)
                     function.delete()
         context = {'function_list': Function.objects.all()}
         return render(request, 'dashboard/_list.html', context)

@@ -1,7 +1,4 @@
-import os
-
 from django.db import models
-from django.dispatch import receiver
 
 
 class Function(models.Model):
@@ -18,10 +15,3 @@ class Function(models.Model):
 
     def format_modified(self):
         return self.modified.strftime("%Y-%m-%d %H:%M:%S.%f")
-
-
-@receiver(models.signals.post_delete, sender=Function)
-def auto_delete_file_on_delete(sender, instance, **kwargs):
-    if instance.plot:
-        if os.path.isfile(instance.plot.path):
-            os.remove(instance.plot.path)
